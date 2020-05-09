@@ -129,7 +129,7 @@ const Summary = () => {
       <Filter />
       {(globalInfo || countryInfo) && countries && !loading ? (
         <Fragment>
-          <Box className={classes.box} boxShadow={3}>
+          <div className={classes.box}>
             <div className={classes.header}>
               {globalInfo && countryInfo === null ? (
                 <h1 className={classes.headerText}>
@@ -251,7 +251,7 @@ const Summary = () => {
                 </Box>
               </Grid>
             </Grid>
-          </Box>
+          </div>
         </Fragment>
       ) : (
         <Preloader country={country} />
