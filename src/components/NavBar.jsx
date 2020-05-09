@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(3)
   },
   list: {
-    width: 350,
+    width: 320,
   },
   appTitle: {
 
