@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // material-ui
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Grid } from '@material-ui/core';
-import { red, grey, green }  from '@material-ui/core/colors';
+import { red, grey, green, cyan }  from '@material-ui/core/colors';
 // Moment
 import Moment from 'react-moment';
 // Components
@@ -156,6 +156,7 @@ const Summary = () => {
               </p>
             </div>
             <Grid container spacing={1}>
+              {/* Confirmed Cases */}
               <Grid item xs={12}>
                 <Box className={classes.bigDataContainer} boxShadow={2}>
                   <Grid container spacing={1}>
@@ -188,7 +189,8 @@ const Summary = () => {
                   </Grid>
                 </Box>
               </Grid>
-
+              
+              {/* Deaths */}
               <Grid item xs={12}>
                 <Box className={classes.bigDataContainer} boxShadow={2}>
                   <Grid container>
@@ -221,10 +223,22 @@ const Summary = () => {
                   </Grid>
                 </Box>
               </Grid>
-
+              
+              {/* Other Info */}
               <Grid item xs={12}>
                 <Box className={classes.bigDataContainer}>
                   <Grid container spacing={1}>
+                    <Grid item xs={6}>
+                      <Box className={classes.dataContainer} boxShadow={2}>
+                        <div className={classes.textLabel}>
+                          <FontAwesomeIcon icon="head-side-mask" size="lg" className={classes.icon} style={{ color: red[500] }} /> {' '}
+                          Active Cases
+                        </div>
+                        <div className={classes.dataValue}>
+                          { !countryInfo ? Number(globalInfo.active).toLocaleString('en') : Number(countryInfo.active).toLocaleString('en') }
+                        </div>
+                      </Box>
+                    </Grid>
                     <Grid item xs={6}>
                       <Box className={classes.dataContainer} boxShadow={2}>
                         <div className={classes.textLabel}>
@@ -236,6 +250,13 @@ const Summary = () => {
                         </div>
                       </Box>
                     </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box className={classes.bigDataContainer}>
+                  <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Box className={classes.dataContainer} boxShadow={2}>
                         <div className={classes.textLabel}>
@@ -244,6 +265,17 @@ const Summary = () => {
                         </div>
                         <div className={classes.dataValue}>
                           { !countryInfo ? Number(globalInfo.recovered).toLocaleString('en') : Number(countryInfo.recovered).toLocaleString('en') }
+                        </div>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Box className={classes.dataContainer} boxShadow={2}>
+                        <div className={classes.textLabel}>
+                          <FontAwesomeIcon icon="vial" size="lg" className={classes.icon} style={{ color: cyan[400] }} /> {' '}
+                          Test Conducted
+                        </div>
+                        <div className={classes.dataValue}>
+                          { !countryInfo ? Number(globalInfo.tests).toLocaleString('en') : Number(countryInfo.tests).toLocaleString('en') }
                         </div>
                       </Box>
                     </Grid>
