@@ -10,8 +10,8 @@ import FilterState from './context/filter/FilterState';
 import InfoState from './context/info/InfoState';
 // Icons
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faGlobeAsia, faSearch, faClock, faSkull, faHeartbeat, faHeadSideMask, faHeadSideCough, faVial, faVirus, faViruses } from '@fortawesome/free-solid-svg-icons';
-library.add(faGlobeAsia, faSearch, faClock, faSkull, faHeartbeat, faHeadSideMask, faHeadSideCough, faVial, faVirus, faViruses)
+import { faGlobeAsia, faFlag, faSearch, faClock, faSkull, faProcedures, faHeartbeat, faHeadSideMask, faHeadSideCough, faVial, faVirus, faViruses } from '@fortawesome/free-solid-svg-icons';
+library.add(faGlobeAsia, faFlag, faSearch, faClock, faSkull, faProcedures, faHeartbeat, faHeadSideMask, faHeadSideCough, faVial, faVirus, faViruses)
 
 function App() {
   return (

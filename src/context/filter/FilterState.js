@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import FilterContext from './filterContext';
-import FilterReducer from './filterReducer';
+import FilterContext from './filterContext'
+import FilterReducer from './filterReducer'
 import {
   SET_COUNTRY,
   GET_COUNTRIES,
