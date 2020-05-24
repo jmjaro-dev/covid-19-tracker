@@ -56,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
     color: grey[800]
   },
   sideBarLink: {
-    color: red[900]
+    color: red[900],
+    textDecoration: "none"
   }
 }));
 
@@ -99,7 +100,11 @@ const NavBar = () => {
           <ListItemIcon className={classes.sideBarIcon}>
             <CodeIcon />
           </ListItemIcon>
-          <ListItemText primary="Jerome Mico S. Jaropojop"/>
+          <ListItemText>
+            <a href="https://jmjaropojop-web-developer.netlify.app/" className={classes.sideBarLink}>
+            Jerome Mico S. Jaropojop
+            </a>  
+          </ListItemText>
         </ListItem>
         <ListItem>
           <ListItemIcon className={classes.sideBarIcon}>

@@ -4,6 +4,8 @@ import InfoContext from '../context/info/infoContext';
 import FilterContext from '../context/filter/filterContext';
 // font-awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// icons
+import InfoIcon from '@material-ui/icons/Info';
 // material-ui
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { 
@@ -135,7 +137,21 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   emphasize : {
-    fontWeight: "bold"
+    fontSize: "0.85em",
+    fontWeight: "bold",
+    margin: "2em auto"
+  },
+  tip: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: grey[500],
+    fontSize: "0.8em",
+    margin: "1em auto"
+  },
+  hintIcon: {
+    color: grey[600],
+    marginRight: "0.3em"
   },
   divider: {
     margin: '2em 0'
@@ -404,81 +420,82 @@ const Summary = () => {
                   Test Conducted
                 </span>}
             </div>
-            <TableContainer className={classes.table} component={Paper} elevation={3}>
-              <Table size="small" stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell align="center">
-                      <FontAwesomeIcon icon="flag" size="lg" className={classes.icon} />
-                      Country
-                    </StyledTableCell>
-                    <StyledTableCell align="center" onClick={onFilter}>
-                      <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'confirmed' ? true : false} className={topCountriesFilter === 'confirmed' && classes.activeFilter}>
-                        <FontAwesomeIcon icon="head-side-cough" size="lg" className={classes.icon} style={topCountriesFilter === 'confirmed' && { color: red[500] }} />
-                        Confirmed
-                      </TableSortLabel>
-                    </StyledTableCell>  
-                    <StyledTableCell align="center" onClick={onFilter}>
-                      <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'deaths' ? true : false} className={topCountriesFilter === 'deaths' && classes.activeFilter}>
-                        <FontAwesomeIcon icon="skull" size="lg" className={classes.icon} style={topCountriesFilter === 'deaths' && { color: grey[700] }} />
-                        Deaths
-                      </TableSortLabel>
-                    </StyledTableCell>
-                    <StyledTableCell align="center" onClick={onFilter}>
-                      <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'active' ? true : false} className={topCountriesFilter === 'active' && classes.activeFilter}>
-                        <FontAwesomeIcon icon="head-side-mask" size="lg" className={classes.icon} style={topCountriesFilter === 'active' && { color: red[500] }} />
-                        Active
-                      </TableSortLabel>
-                    </StyledTableCell>
-                    <StyledTableCell align="center" onClick={onFilter}>
-                      <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'critical' ? true : false} className={topCountriesFilter === 'critical' && classes.activeFilter}>
-                        <FontAwesomeIcon icon="procedures" size="lg" className={classes.icon} style={topCountriesFilter === 'critical' && { color: red[900] }} />
-                        Critical
-                      </TableSortLabel>
-                    </StyledTableCell>
-                    <StyledTableCell align="center" onClick={onFilter}>
-                      <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'recovered' ? true : false} className={topCountriesFilter === 'recovered' && classes.activeFilter}>
-                        <FontAwesomeIcon icon="heartbeat" size="lg" className={classes.icon} style={topCountriesFilter === 'recovered' && { color: green['A700'] }} />
-                        Recovered
-                      </TableSortLabel>
-                    </StyledTableCell>
-                    <StyledTableCell align="center" onClick={onFilter}>
-                      <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'tests' ? true : false} className={topCountriesFilter === 'tests' && classes.activeFilter}>
-                        <FontAwesomeIcon icon="vial" size="lg" className={classes.icon} style={topCountriesFilter === 'tests' && { color: cyan[400] }} />
-                        Tests
-                      </TableSortLabel>
-                    </StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {topCountriesInfo && !loading_top_countries ? (topCountriesInfo.map((country, index) => (
-                    <StyledTableRow key={country.country}>
+            <span className={classes.tip}>
+              <InfoIcon fontSize="small" className={classes.hintIcon} /> Click on a "Table Header" to filter the list.
+            </span>
+            {topCountriesInfo && !loading_top_countries ? (
+              <TableContainer className={classes.table} component={Paper} elevation={3}>
+                <Table size="small" stickyHeader>
+                  <TableHead>
+                    <TableRow>
                       <StyledTableCell align="center">
-                        <Box className={classes.miniFlagContainer} boxShadow={3}>
-                          <img className={classes.miniFlag} src={country.countryInfo.flag} alt={`${country.country} Flag`}/>
-                        </Box>
-                        #{index+1} {country.country} 
+                        <FontAwesomeIcon icon="flag" size="lg" className={classes.icon} />
+                        Country
                       </StyledTableCell>
-                    <StyledTableCell align="center" className={topCountriesFilter === 'confirmed' && classes.emphasize}>{country.cases.toLocaleString('en')}</StyledTableCell>
-                    <StyledTableCell align="center" className={topCountriesFilter === 'deaths' && classes.emphasize}>{country.deaths.toLocaleString('en')}</StyledTableCell>
-                    <StyledTableCell align="center" className={topCountriesFilter === 'active' && classes.emphasize}>{country.active.toLocaleString('en')}</StyledTableCell>
-                    <StyledTableCell align="center" className={topCountriesFilter === 'critical' && classes.emphasize}>{country.critical.toLocaleString('en')}</StyledTableCell>
-                    <StyledTableCell align="center" className={topCountriesFilter === 'recovered' && classes.emphasize}>{country.recovered.toLocaleString('en')}</StyledTableCell>
-                    <StyledTableCell align="center" className={topCountriesFilter === 'tests' && classes.emphasize}>{country.tests.toLocaleString('en')}</StyledTableCell>
-                    </StyledTableRow>
-                  )))
-                  : (
-                    <StyledTableRow key={country.country}>
-                      <StyledTableCell align="center" className={classes.emphasize} colSpan={7} style={{ height: 100}}>
-                        <FontAwesomeIcon icon="virus" spin/> {' '}
-                        Updating Information...
+                      <StyledTableCell align="center" onClick={onFilter}>
+                        <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'confirmed' ? true : false} className={topCountriesFilter === 'confirmed' && classes.activeFilter}>
+                          <FontAwesomeIcon icon="head-side-cough" size="lg" className={classes.icon} style={topCountriesFilter === 'confirmed' && { color: red[500] }} />
+                          Confirmed
+                        </TableSortLabel>
+                      </StyledTableCell>  
+                      <StyledTableCell align="center" onClick={onFilter}>
+                        <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'deaths' ? true : false} className={topCountriesFilter === 'deaths' && classes.activeFilter}>
+                          <FontAwesomeIcon icon="skull" size="lg" className={classes.icon} style={topCountriesFilter === 'deaths' && { color: grey[700] }} />
+                          Deaths
+                        </TableSortLabel>
                       </StyledTableCell>
-                    </StyledTableRow>
-                  )
-                }
-                </TableBody>
-              </Table>
-            </TableContainer>
+                      <StyledTableCell align="center" onClick={onFilter}>
+                        <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'active' ? true : false} className={topCountriesFilter === 'active' && classes.activeFilter}>
+                          <FontAwesomeIcon icon="head-side-mask" size="lg" className={classes.icon} style={topCountriesFilter === 'active' && { color: red[500] }} />
+                          Active
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell align="center" onClick={onFilter}>
+                        <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'critical' ? true : false} className={topCountriesFilter === 'critical' && classes.activeFilter}>
+                          <FontAwesomeIcon icon="procedures" size="lg" className={classes.icon} style={topCountriesFilter === 'critical' && { color: red[900] }} />
+                          Critical
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell align="center" onClick={onFilter}>
+                        <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'recovered' ? true : false} className={topCountriesFilter === 'recovered' && classes.activeFilter}>
+                          <FontAwesomeIcon icon="heartbeat" size="lg" className={classes.icon} style={topCountriesFilter === 'recovered' && { color: green['A700'] }} />
+                          Recovered
+                        </TableSortLabel>
+                      </StyledTableCell>
+                      <StyledTableCell align="center" onClick={onFilter}>
+                        <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'tests' ? true : false} className={topCountriesFilter === 'tests' && classes.activeFilter}>
+                          <FontAwesomeIcon icon="vial" size="lg" className={classes.icon} style={topCountriesFilter === 'tests' && { color: cyan[400] }} />
+                          Tests
+                        </TableSortLabel>
+                      </StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {topCountriesInfo.map((country, index) => (
+                      <StyledTableRow key={country.country}>
+                        <StyledTableCell align="center">
+                          <Box className={classes.miniFlagContainer} boxShadow={3}>
+                            <img className={classes.miniFlag} src={country.countryInfo.flag} alt={`${country.country} Flag`}/>
+                          </Box>
+                          #{index+1} {country.country} 
+                        </StyledTableCell>
+                      <StyledTableCell align="center" className={topCountriesFilter === 'confirmed' && classes.emphasize}>{country.cases.toLocaleString('en')}</StyledTableCell>
+                      <StyledTableCell align="center" className={topCountriesFilter === 'deaths' && classes.emphasize}>{country.deaths.toLocaleString('en')}</StyledTableCell>
+                      <StyledTableCell align="center" className={topCountriesFilter === 'active' && classes.emphasize}>{country.active.toLocaleString('en')}</StyledTableCell>
+                      <StyledTableCell align="center" className={topCountriesFilter === 'critical' && classes.emphasize}>{country.critical.toLocaleString('en')}</StyledTableCell>
+                      <StyledTableCell align="center" className={topCountriesFilter === 'recovered' && classes.emphasize}>{country.recovered.toLocaleString('en')}</StyledTableCell>
+                      <StyledTableCell align="center" className={topCountriesFilter === 'tests' && classes.emphasize}>{country.tests.toLocaleString('en')}</StyledTableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <div align="center" className={classes.emphasize} style={{ height: 100}}>
+                <FontAwesomeIcon icon="virus" spin/> {' '}
+                Updating Information...
+              </div>
+            )}
           </div>
         </Fragment>
       ) : (
