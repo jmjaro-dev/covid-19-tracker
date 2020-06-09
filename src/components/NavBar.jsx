@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    fontSize: '1.2rem'
   },
   navBar: {
     backgroundColor: red[900]
@@ -46,7 +47,13 @@ const useStyles = makeStyles((theme) => ({
     width: 320,
   },
   appTitle: {
-
+    flexGrow: 1,
+    fontSize: '1.2rem'
+  },
+  appTitleIcon: {
+    marginRight: theme.spacing(3),
+    fontSize: '1.2rem',
+    color: red[900]
   },
   appSideBarIcon: {
     marginRight: theme.spacing(3),
@@ -84,10 +91,10 @@ const NavBar = () => {
       <List>
         <ListItem>
           <ListItemText>
-            <h2>
-              <FontAwesomeIcon icon="viruses" className={classes.appSideBarIcon}/>
-              Covid-19 Tracker
-            </h2>
+            <Typography variant="h6" className={classes.appTitle}>
+              <FontAwesomeIcon icon="viruses" className={classes.appTitleIcon} />
+              JMJ's Covid-19 Tracker
+            </Typography>
           </ListItemText>
         </ListItem>
       </List>
@@ -139,7 +146,7 @@ const NavBar = () => {
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             <FontAwesomeIcon icon="viruses" className={classes.icon} />
-            Covid-19 Tracker
+            JMJ's Covid-19 Tracker
           </Typography>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
             <MenuIcon />
