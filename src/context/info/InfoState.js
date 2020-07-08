@@ -26,7 +26,7 @@ const InfoState = props => {
   const getGlobalSummary = async () => {
     setLoading();
 
-    const res = await axios.get("https://disease.sh/v2/all");
+    const res = await axios.get("https://disease.sh/v3/covid-19/all");
     
     dispatch({
       type: GET_GLOBAL_SUMMARY,
@@ -38,7 +38,7 @@ const InfoState = props => {
   const getCountryInfo = async country => {
     setLoading();
 
-    const res = await axios.get(`https://disease.sh/v2/countries/${country}`);
+    const res = await axios.get(`https://disease.sh/v3/covid-19/countries/${country}`);
     
     dispatch({
       type: GET_COUNTRY_INFO,
@@ -50,7 +50,7 @@ const InfoState = props => {
   const getTopCountries = async filter => {
     setLoadingTopCountries();
     
-    const res = await axios.get("https://disease.sh/v2/countries");
+    const res = await axios.get(`https://disease.sh/v3/covid-19/countries?sort=${filter}`);
 
     dispatch({
       type: GET_TOP_COUNTRIES,

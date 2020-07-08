@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // icons
 import InfoIcon from '@material-ui/icons/Info';
 // material-ui
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { 
   Box,
   Divider, 
@@ -25,138 +25,10 @@ import { red, grey, green, cyan }  from '@material-ui/core/colors';
 // Moment
 import Moment from 'react-moment';
 // Components
-import Filter from './Filter';
-import Preloader from './Preloader';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    paddingTop: '1em'
-  },
-  box: {
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.primary,
-    maxWidth: '450px',
-    margin: 'auto'
-  },
-  bigDataContainer: {
-    padding: 0,
-    textAlign: 'center',
-    color: theme.palette.text.primary,
-    margin: 'auto',
-    maxWidth: '350px',
-    borderRadius: '10px'
-  },
-  dataContainer: {
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.primary,
-    maxWidth: '160px',
-    height: '75px',
-    margin: 'auto',
-    borderRadius: '10px'
-  },
-  dataLabel: {
-    fontSize: '0.9em',
-    fontWeight: 'bold',
-    paddingTop: '1em'
-  },
-  dataValue: {
-    fontSize: '0.9em',
-    fontWeight: 'bold'
-  },
-  dateContainer: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.primary,
-  },
-  date: {
-    color: theme.palette.text.primary,
-    fontSize: '1.2em',
-    fontWeight: 'bold'
-  },
-  dateLabel: {
-    color: grey[700],
-    fontSize: '0.7em'
-  },
-  header: {
-    padding: '1em',
-  },
-  headerText: {
-    fontSize: '1.5em'
-  },
-  textLabel: {
-    color: grey[600],
-    paddingTop: '1em',
-    fontSize: '0.83em',
-    fontWeight: '500',
-    marginBottom: '1.2em'
-  },
-  icon: {
-    marginRight: '0.3em'
-  },
-  flagContainer: {
-    width: "40px",
-    height: "25px",
-    margin: "0 auto",
-    padding: 0,
-    borderRadius: '5px'
-  },
-  miniFlagContainer: {
-    width: "20px",
-    height: "15px",
-    margin: "0 auto 0.5em auto",
-    padding: 0,
-    borderRadius: '5px'
-  },
-  flag: {
-    borderRadius: '5px',
-    width: '40px',
-    height: '25px'
-  },
-  miniFlag: {
-    borderRadius: '5px',
-    width: '20px',
-    height: '15px'
-  },
-  topCountriesContainer: {
-    maxWidth: "900px",
-    margin: "0 auto 2em auto"
-  },
-  topCountriesHeader: {
-    width: "100%",
-    textAlign: "center",
-    fontSize: "1.5em",
-    fontWeight: "bold",
-    marginBottom: "1.5em"
-  },
-  activeFilter: {
-    '&.MuiTableSortLabel-active' : {
-      color: red[900]
-    }
-  },
-  emphasize : {
-    fontSize: "0.85em",
-    fontWeight: "bold",
-    margin: "2em auto"
-  },
-  tip: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: grey[500],
-    fontSize: "0.8em",
-    margin: "1em auto"
-  },
-  hintIcon: {
-    color: grey[600],
-    marginRight: "0.3em"
-  },
-  divider: {
-    margin: '2em 0'
-  }
-}));
+import Filter from './Filter'
+import Preloader from './layout/Preloader';
+// Styles
+import { useStyles } from './styles/summary';
 
 const StyledTableCell = withStyles(() => ({
   head: {
@@ -182,12 +54,12 @@ const Summary = () => {
   const infoContext = useContext(InfoContext);
   const { country, countries } = filterContext;
   const { globalInfo, countryInfo, topCountriesInfo, getGlobalSummary, getCountryInfo, getTopCountries, loading, loading_top_countries } = infoContext;
-  const [topCountriesFilter, setFilter] = useState('confirmed');
+  const [topCountriesFilter, setFilter] = useState('cases');
   
   useEffect(() => {
     if(globalInfo === null && country === "Global" && !countries && !loading) {
       getGlobalSummary();
-      getTopCountries('confirmed');
+      getTopCountries('cases');
     }
 
     if(!globalInfo && countryInfo && country === "Global" && !loading) {
@@ -324,6 +196,40 @@ const Summary = () => {
                   </Grid>
                 </Box>
               </Grid>
+
+              {/* Recovered */}
+              <Grid item xs={12}>
+                <Box className={classes.bigDataContainer} boxShadow={2}>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <div className={classes.dataLabel}>
+                        <FontAwesomeIcon icon="heartbeat" size="lg" className={classes.icon} style={{ color: green['A700'] }} /> {' '}
+                        Recovered
+                      </div>
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <div className={classes.dataContainer}>
+                        <div className={classes.textLabel}>
+                          Recovered Today
+                        </div>
+                        <div className={classes.dataValue}>
+                          { !countryInfo ? Number(globalInfo.todayRecovered).toLocaleString('en') : Number(countryInfo.todayRecovered).toLocaleString('en') }
+                        </div>
+                      </div>
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <div className={classes.dataContainer}>
+                        <div className={classes.textLabel}>
+                          Total Recovered
+                        </div>
+                        <div className={classes.dataValue}>
+                          { !countryInfo ? Number(globalInfo.recovered).toLocaleString('en') : Number(countryInfo.recovered).toLocaleString('en') }
+                        </div>
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
               
               {/* Other Info */}
               <Grid item xs={12}>
@@ -361,22 +267,22 @@ const Summary = () => {
                     <Grid item xs={6}>
                       <Box className={classes.dataContainer} boxShadow={2}>
                         <div className={classes.textLabel}>
-                          <FontAwesomeIcon icon="heartbeat" size="lg" className={classes.icon} style={{ color: green['A700'] }} /> {' '}
-                          Recovered
+                          <FontAwesomeIcon icon="vial" size="lg" className={classes.icon} style={{ color: cyan[400] }} /> {' '}
+                          Test Conducted
                         </div>
                         <div className={classes.dataValue}>
-                          { !countryInfo ? Number(globalInfo.recovered).toLocaleString('en') : Number(countryInfo.recovered).toLocaleString('en') }
+                          { !countryInfo ? Number(globalInfo.tests).toLocaleString('en') : Number(countryInfo.tests).toLocaleString('en') }
                         </div>
                       </Box>
                     </Grid>
                     <Grid item xs={6}>
                       <Box className={classes.dataContainer} boxShadow={2}>
                         <div className={classes.textLabel}>
-                          <FontAwesomeIcon icon="vial" size="lg" className={classes.icon} style={{ color: cyan[400] }} /> {' '}
-                          Test Conducted
+                          <FontAwesomeIcon icon="users" size="lg" className={classes.icon} style={{ color: grey[600] }} /> {' '}
+                          Population
                         </div>
                         <div className={classes.dataValue}>
-                          { !countryInfo ? Number(globalInfo.tests).toLocaleString('en') : Number(countryInfo.tests).toLocaleString('en') }
+                          { !countryInfo ? Number(globalInfo.population).toLocaleString('en') : Number(countryInfo.population).toLocaleString('en') }
                         </div>
                       </Box>
                     </Grid>
@@ -389,7 +295,7 @@ const Summary = () => {
           <div className={classes.topCountriesContainer}>
             <div className={classes.topCountriesHeader}>
               Top 10 Countries with Most {'  '}
-              {topCountriesFilter === 'confirmed' && 
+              {topCountriesFilter === 'cases' && 
                 <span>
                   <FontAwesomeIcon icon="head-side-cough" className={classes.icon} style={{ color: red[500] }} />
                   Confirmed Cases
@@ -433,9 +339,9 @@ const Summary = () => {
                         Country
                       </StyledTableCell>
                       <StyledTableCell align="center" onClick={onFilter}>
-                        <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'confirmed' ? true : false} className={topCountriesFilter === 'confirmed' && classes.activeFilter}>
-                          <FontAwesomeIcon icon="head-side-cough" size="lg" className={classes.icon} style={topCountriesFilter === 'confirmed' && { color: red[500] }} />
-                          Confirmed
+                        <TableSortLabel hideSortIcon direction='desc' active={topCountriesFilter === 'cases' ? true : false} className={topCountriesFilter === 'cases' && classes.activeFilter}>
+                          <FontAwesomeIcon icon="head-side-cough" size="lg" className={classes.icon} style={topCountriesFilter === 'cases' && { color: red[500] }} />
+                          Cases
                         </TableSortLabel>
                       </StyledTableCell>  
                       <StyledTableCell align="center" onClick={onFilter}>
@@ -479,7 +385,7 @@ const Summary = () => {
                           </Box>
                           #{index+1} {country.country} 
                         </StyledTableCell>
-                      <StyledTableCell align="center" className={topCountriesFilter === 'confirmed' && classes.emphasize}>{country.cases.toLocaleString('en')}</StyledTableCell>
+                      <StyledTableCell align="center" className={topCountriesFilter === 'cases' && classes.emphasize}>{country.cases.toLocaleString('en')}</StyledTableCell>
                       <StyledTableCell align="center" className={topCountriesFilter === 'deaths' && classes.emphasize}>{country.deaths.toLocaleString('en')}</StyledTableCell>
                       <StyledTableCell align="center" className={topCountriesFilter === 'active' && classes.emphasize}>{country.active.toLocaleString('en')}</StyledTableCell>
                       <StyledTableCell align="center" className={topCountriesFilter === 'critical' && classes.emphasize}>{country.critical.toLocaleString('en')}</StyledTableCell>
@@ -492,8 +398,8 @@ const Summary = () => {
               </TableContainer>
             ) : (
               <div align="center" className={classes.emphasize} style={{ height: 100}}>
-                <FontAwesomeIcon icon="virus" spin/> {' '}
-                Updating Information...
+                <FontAwesomeIcon icon="virus" style={{ color: red[900] }} spin /> {' '}
+                Fetching Information...
               </div>
             )}
           </div>

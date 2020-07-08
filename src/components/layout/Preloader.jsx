@@ -31,9 +31,9 @@ const Preloader = ({country}) => {
       <div style={styles.loader}>
         <FontAwesomeIcon icon="virus" size="2x" style={styles.loader} spin/>
         <div style={styles.text}>
-          {country === "Global" ? "Getting Global Data..." : (
+          {country === "Global" ? "Fetching Global Data..." : (
             <span>
-              Getting Data for {' '}
+              Fetching Data for {' '}
               <span style={styles.countryText}>
                 {country}
               </span>

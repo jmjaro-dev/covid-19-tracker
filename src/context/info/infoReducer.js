@@ -24,42 +24,17 @@ export default (state, action) => {
       }
     case GET_TOP_COUNTRIES: 
       switch(action.payload.filter) {
-        case 'confirmed': 
-          return {
-            ...state,
-            topCountriesInfo: action.payload.countries.sort((countryA, countryB) => countryB.cases-countryA.cases).filter((country, index) => index <= 9),
-            loading_top_countries: false
-          }
-        case 'deaths': 
-          return {
-            ...state,
-            topCountriesInfo: action.payload.countries.sort((countryA, countryB) => countryB.deaths-countryA.deaths).filter((country, index) => index <= 9),
-            loading_top_countries: false
-          }
+        case 'cases': 
+        case 'deaths':
         case 'active': 
-          return {
-            ...state,
-            topCountriesInfo: action.payload.countries.sort((countryA, countryB) => countryB.active-countryA.active).filter((country, index) => index <= 9),
-            loading_top_countries: false
-          }
-        case 'critical': 
-          return {
-            ...state,
-            topCountriesInfo: action.payload.countries.sort((countryA, countryB) => countryB.critical-countryA.critical).filter((country, index) => index <= 9),
-            loading_top_countries: false
-          }
+        case 'critical':
         case 'recovered': 
-          return {
-            ...state,
-            topCountriesInfo: action.payload.countries.sort((countryA, countryB) => countryB.recovered-countryA.recovered).filter((country, index) => index <= 9),
-            loading_top_countries: false
-          }
         case 'tests': 
           return {
             ...state,
-            topCountriesInfo: action.payload.countries.sort((countryA, countryB) => countryB.tests-countryA.tests).filter((country, index) => index <= 9),
+            topCountriesInfo: action.payload.countries.filter((country, index) => index <= 9),
             loading_top_countries: false
-          }
+          } 
         default: 
           return state;
       }

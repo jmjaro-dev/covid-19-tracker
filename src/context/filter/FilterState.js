@@ -31,7 +31,7 @@ const FilterState = props => {
   const getCountries = async () => {
     setLoading();
 
-    const res = await axios.get("https://disease.sh/v2/countries");
+    const res = await axios.get("https://disease.sh/v3/covid-19/countries");
     
     dispatch({
       type: GET_COUNTRIES,
