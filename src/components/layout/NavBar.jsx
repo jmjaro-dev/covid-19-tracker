@@ -108,7 +108,7 @@ const NavBar = () => {
             <CodeIcon />
           </ListItemIcon>
           <ListItemText>
-            <a href="https://jmjaropojop-web-developer.netlify.app/" className={classes.sideBarLink}>
+            <a href="https://jmjaropojop-web-developer-v2.netlify.app/" className={classes.sideBarLink}>
             Jerome Mico S. Jaropojop
             </a>  
           </ListItemText>
